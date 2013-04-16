@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmap xmlns="http://www.aussie.com.au/sqlmap"
+		xmlns:xsi="http://www.w3.org.2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.aussie.com.au/sqlmap 
+							http://www.aussie.com.au/sqlmap/sqlmap.xsd">
+	<sql key="add">insert into users07 (id, name, password, level, login, recommend, email) values (?, ?, ?, ?, ?, ?, ?)</sql>
+	<sql key="get">select id, name, password, level, login, recommend, email from users07 where id=? </sql>
+	<sql key="getAll">select id, name, password, level, login, recommend, email from users07 </sql>
+	<sql key="delete">delete from users07 where id=? </sql>
+	<sql key="deleteAll">delete from users07 </sql>
+	<sql key="getCount">select count(*) cnt from users07 </sql>
+	<sql key="update">update users07 set name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? where id = ? </sql>
+</sqlmap>
+		
