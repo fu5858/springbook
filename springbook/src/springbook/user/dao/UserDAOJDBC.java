@@ -59,7 +59,7 @@ public class UserDAOJDBC implements UserDAO {
 	 */
 	@Override
 	public void delete(String id) {
-		String deleteQuery = "delete from users07 where id = ? ";
+		String deleteQuery = "delete from users11 where id = ? ";
 		
 		jdbcTemplate.update(sqlService.getSQL("delete"), id);
 	}
@@ -70,7 +70,7 @@ public class UserDAOJDBC implements UserDAO {
 	@Override
 	public int getCount() {
 		
-		String countingQuery = "select count(*) cnt from users07 ";
+		String countingQuery = "select count(*) cnt from users11 ";
 		
 		return jdbcTemplate.queryForInt(sqlService.getSQL("getCount"));
 	}
@@ -80,7 +80,7 @@ public class UserDAOJDBC implements UserDAO {
 	 */
 	@Override
 	public User get(String id) {
-		String selectQuery = "select id, name, password, level, login, recommend, email from users07 where id = ? ";
+		String selectQuery = "select id, name, password, level, login, recommend, email from users11 where id = ? ";
 		
 		return jdbcTemplate.queryForObject(sqlService.getSQL("get"), new Object[] {id}, userMapper);
 	}
@@ -92,7 +92,7 @@ public class UserDAOJDBC implements UserDAO {
 	public List<User> getAll() {
 //		System.out.println("Get all user's info");
 //		System.out.println(sqlService.getSQL("getAll"));
-		String selectQuery = " select id, name, password, level, login, recommend, email from users07 ";
+		String selectQuery = " select id, name, password, level, login, recommend, email from users11 ";
 		
 		return jdbcTemplate.query(sqlService.getSQL("getAll"), userMapper);
 	}
@@ -104,7 +104,7 @@ public class UserDAOJDBC implements UserDAO {
 	public void update(User user) {
 //		System.out.println("Update user's info for " + user.getId() + " : " + user.getName() + " : " + user.getLevel());
 		
-		String updateQuery = "update users07 set " +
+		String updateQuery = "update users11 set " +
 				"name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? " +
 				"where id = ?";
 		jdbcTemplate.update(sqlService.getSQL("update"), user.getName(), user.getPassword(), user.getLevel().intValue()
