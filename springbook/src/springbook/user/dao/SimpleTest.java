@@ -8,7 +8,7 @@ public class SimpleTest {
 
 	@Test
 	public void filePath(){
-		File file = new File("C:\\workspace_springsource\\STS_Juno\\springbook_ch07_06_05\\src\\");
+		File file = new File("D:\\workspace_springsource\\STS_Juno\\springbook\\src\\");
 		System.out.println(file.getAbsolutePath());
 		
 		File[] listOfFiles = file.listFiles();
@@ -24,7 +24,7 @@ public class SimpleTest {
 
 	@Test
 	public void getFileNames(){
-		File folder = new File("C:\\workspace_springsource\\STS_Juno\\springbook_ch07_06_05\\src\\");
+		File folder = new File("D:\\workspace_springsource\\STS_Juno\\springbook\\src\\");
 		File[] listOfFiles = folder.listFiles();
 
 		    for (int i = 0; i < listOfFiles.length; i++) {
