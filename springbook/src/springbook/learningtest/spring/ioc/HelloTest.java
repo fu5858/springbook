@@ -4,18 +4,26 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
+
+import springbook.learningtest.spring.ioc.bean.AnnotatedHello;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHelloConfig;
 
 public class HelloTest {
 
@@ -54,6 +62,8 @@ public class HelloTest {
 		
 		
 		assertThat(applicationContext.getBean("printer").toString(), is("Hello Spring"));
+		
+//		System.out.println(applicationContext.getBean("printer").toString());
 	}
 	
 	@Test
@@ -122,6 +132,7 @@ public class HelloTest {
 		assertThat(hello, is(notNullValue()));
 	}
 	
+	// page 94 using @configuration annotation
 	@Test
 	public void simpleBeanConfig(){
 		ApplicationContext context = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
@@ -133,5 +144,58 @@ public class HelloTest {
 		AnnotatedHelloConfig helloConfig = context.getBean("annotatedHelloConfig", AnnotatedHelloConfig.class);
 		
 		assertThat(helloConfig, is(notNullValue()));
+		
 	}
+	
+	// page 158 List 1-69 singleton bean test
+	@Test
+	public void singletoneScope(){
+		ApplicationContext context = new AnnotationConfigApplicationContext(SingletonBean.class, SingletonClientBean.class);
+		Set<SingletonBean> beans = new HashSet<>();
+		
+		beans.add(context.getBean(SingletonBean.class));
+		beans.add(context.getBean(SingletonBean.class));
+		assertThat(beans.size(), is(1));
+		
+		beans.add(context.getBean(SingletonClientBean.class).bean1);
+		beans.add(context.getBean(SingletonClientBean.class).bean2);
+		assertThat(beans.size(), is(1));
+	}
+	
+	static class SingletonBean{}
+	
+	static class SingletonClientBean{
+		@Autowired
+		SingletonBean bean1;
+		@Autowired
+		SingletonBean bean2;
+	}
+	
+	// page 158 List 1-70 prototype bean test
+	@Test
+	public void prototypeS2cope(){
+		ApplicationContext context = new AnnotationConfigApplicationContext(PrototypeBean.class, PrototypeClientBean.class);
+		Set<PrototypeBean> beans = new HashSet<>();
+		
+		beans.add(context.getBean(PrototypeBean.class));
+		assertThat(beans.size(), is(1));
+		beans.add(context.getBean(PrototypeBean.class));
+		assertThat(beans.size(), is(2));
+
+		beans.add(context.getBean(PrototypeClientBean.class).bean1);
+		assertThat(beans.size(), is(3));
+		beans.add(context.getBean(PrototypeClientBean.class).bean2);
+		assertThat(beans.size(), is(4));
+	}
+	
+	@Scope("prototype")
+	static class PrototypeBean{}
+	
+	static class PrototypeClientBean{
+		@Autowired
+		PrototypeBean bean1;
+		@Autowired
+		PrototypeBean bean2;
+	}
+	
 }

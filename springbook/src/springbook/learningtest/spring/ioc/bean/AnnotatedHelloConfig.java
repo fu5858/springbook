@@ -1,4 +1,4 @@
-package springbook.learningtest.spring.ioc;
+package springbook.learningtest.spring.ioc.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

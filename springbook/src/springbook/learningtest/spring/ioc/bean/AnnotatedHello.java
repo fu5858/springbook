@@ -1,6 +1,8 @@
-package springbook.learningtest.spring.ioc;
+package springbook.learningtest.spring.ioc.bean;
 
 import org.springframework.stereotype.Component;
+
+import springbook.learningtest.spring.ioc.Printer;
 
 @Component
 public class AnnotatedHello {
