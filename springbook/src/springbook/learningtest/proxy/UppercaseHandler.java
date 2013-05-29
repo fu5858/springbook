@@ -12,14 +12,15 @@ public class UppercaseHandler implements InvocationHandler {
 	}
 	
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
 		Object ret = method.invoke(target, args);
 		
 		if(ret instanceof String && method.getName().startsWith("say")){
+			System.out.println("startWith 'say' " + method.getName() + " ==> " + ((String)ret).toUpperCase());
 			return ((String)ret).toUpperCase();
 		}else {
+			System.out.println(ret);
 			return ret;
 		}
 	}
